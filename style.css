@@ -5,10 +5,14 @@ body {
   padding: 0;
 }
 .container {
+  width: 100%;
   max-width: 600px;
-  margin: auto;
+  margin: 0 auto; 
   padding: 20px;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
+
 .card {
   background: #fff;
   border-radius: 16px;
