@@ -1,0 +1,137 @@
+body {
+  font-family: 'Inter', sans-serif;
+  background: #F8FAFC;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+}
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* HEADER CARD */
+.header-card {
+  border-radius: 20px;
+  padding: 24px;
+  text-align: center;
+  color: #fff;
+  background: linear-gradient(135deg, #2563EB, #3B82F6);
+  margin-bottom: 24px;
+}
+.header-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #fff;
+  padding: 8px;
+  margin-bottom: 16px;
+}
+.subtitle {
+  color:#E0F2FE;
+  font-size:14px;
+}
+
+/* HEADINGS */
+h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #1F2937;
+  text-align: center;
+}
+
+/* FORM */
+label {
+  font-size: 14px;
+  color: #6B7280;
+  display: block;
+  margin-bottom: 6px;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #CBD5E1;
+  background: #F8FAFC;
+  font-size: 16px;
+  color: #1F2937;
+  margin-bottom: 20px; 
+  box-sizing: border-box; 
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: #3B82F6;
+  box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
+}
+
+/* BUTTONS */
+button {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  margin-top: 4px;
+}
+button:hover { opacity: 0.9; }
+.btn-blue { background: #3B82F6; color: white; }
+.btn-green { background: #10B981; color: white; margin-bottom: 20px; }
+
+/* QR CARD */
+#qrcode {
+  margin: 20px auto;
+  width: 240px;
+  height: 240px;
+  background: #F3F4F6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+}
+#countdown {
+  text-align: center;
+  font-weight: 700;
+  font-size: 16px;
+  color: #EF4444;
+}
+.info-box {
+  background: #F0FDF4;
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #166534;
+}
+.info-box strong {
+    color: #15803D; 
+}
+.description {
+    color:#6B7280; font-size:14px;
+    text-align: center;
+}
+
+#qrcode canvas,
+#qrcode img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain; /* keep proportions */
+}

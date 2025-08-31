@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Registration</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <div class="header-card">
+      <img src="school_logo.jpg" alt="School Logo">
+      <h2>Student Registration</h2>
+      <p class="subtitle">Generate your QR code</p>
+      <strong class="subtitle">ONLY REGISTER FOR YOURSELF</strong>
+    </div>
+
+    <!-- Registration Form -->
+    <div id="registration-card" class="card">
+      <h3>Complete Registration</h3>
+      
+      <label for="name">Full name (Surname, Firstname MI.)</label>
+      <input id="name" type="text">
+
+      <label for="studentId">Student ID</label>
+      <input id="studentId" type="text">
+
+      <label for="section">Section</label>
+      <select id="section">
+        <option>Select Section</option>
+        <option>CPE-1A</option><option>CPE-1B</option><option>CPE-1C</option>
+        <option>CPE-2A</option><option>CPE-2B</option><option>CPE-2C</option>
+        <option>CPE-3A</option><option>CPE-3B</option>
+        <option>CPE-4A</option><option>CPE-4B</option>
+      </select>
+
+      <label for="email">Email address</label>
+      <input id="email" type="email">
+
+      <label for="gender">Sex (assigned at birth)</label>
+      <select id="gender">
+        <option>Select Gender</option>
+        <option>Male</option>
+        <option>Female</option>
+      </select>
+
+      <label for="phone">Phone number</label>
+      <input id="phone" type="tel">
+
+      <button class="btn-blue" onclick="registerStudent()">Complete Registration</button>
+    </div>
+
+    <!-- QR Code Card -->
+    <div id="qr-card" class="card" style="display:none;">
+      <h3>Ready to Scan</h3>
+      <p class="description">Generate your QR code for attendance</p>
+
+      <button class="btn-green" onclick="generateQr()">Generate QR Code</button>
+      <div id="qrcode">QR will appear here</div>
+      <div id="countdown"></div>
+
+      <div class="info-box">
+        <strong>ℹ️ Instructions</strong><br>
+        • QR code expires till 12AM<br>
+        • Screenshot this page<br>
+        • Show this to the Membership Committee with your ID<br>
+        • If the code expires, generate a new one
+      </div>
+    </div>
+
+  </div>
+
+  <!-- QRCode.js (external library) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
