@@ -31,15 +31,20 @@ function registerStudent() {
     email: document.getElementById("email").value.trim(),
     gender: document.getElementById("gender").value,
     phoneNumber: document.getElementById("phone").value.trim(),
+    designation: document.getElementById("designation").value,
+    participationNature: document.getElementById("participation").value,
   };
 
+  // Updated validation to include new fields
   if (
     !student.name ||
     !student.id ||
     student.section === "Select Section" ||
     !student.email ||
     student.gender === "Select Gender" ||
-    !student.phoneNumber
+    !student.phoneNumber ||
+    student.designation === "Select Designation" ||
+    student.participationNature === "Select Participation"
   ) {
     alert("Please fill in all fields.");
     return;
@@ -64,21 +69,29 @@ async function generateQr() {
   const expires = midnight.getTime();
   const nonce = crypto.randomUUID();
 
-  const unsigned = `${student.name}|${student.id}|${student.section}|${student.email}|${student.gender}|${student.phoneNumber}|${now}|${expires}|${nonce}`;
+  // Updated unsigned string to match Android app format (no signature)
+  const unsigned = `${student.id}|${student.name}|${student.section}|${student.email}|${student.gender}|${student.phoneNumber}|${student.designation}|${student.participationNature}|${now}|${expires}|${nonce}`;
   const sig = await hmacSha256(unsigned);
 
+  // Updated payload to match Android app structure
   const payload = {
-    id: student.name,
-    name: student.id,
+    id: student.id,           // Student ID
+    name: student.name,       // Student name
     section: student.section,
     email: student.email,
     gender: student.gender,
     phoneNumber: student.phoneNumber,
+    designation: student.designation,
+    participationNature: student.participationNature,
     issuedAt: now,
     expiresAt: expires,
     nonce,
     sig
   };
+
+  console.log("Generated payload:", payload);
+  console.log("Unsigned string:", unsigned);
+  console.log("Signature:", sig);
 
   // Render QR
   const qrEl = document.getElementById("qrcode");
@@ -108,11 +121,10 @@ async function generateQr() {
   }, 1000);
 }
 
-
+// Updated validation function to match new format
 async function validateQrPayload(obj) {
   try {
-
-    const unsigned = `${obj.id}|${obj.name}|${obj.section}|${obj.email}|${obj.gender}|${obj.phoneNumber}|${obj.issuedAt}|${obj.expiresAt}|${obj.nonce}`;
+    const unsigned = `${obj.id}|${obj.name}|${obj.section}|${obj.email}|${obj.gender}|${obj.phoneNumber}|${obj.designation}|${obj.participationNature}|${obj.issuedAt}|${obj.expiresAt}|${obj.nonce}`;
     const expectedSig = await hmacSha256(unsigned);
 
     if (expectedSig !== obj.sig) {
