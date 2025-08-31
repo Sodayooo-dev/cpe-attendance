@@ -6,7 +6,7 @@ body {
 }
 .container {
   width: 100%;
-  max-width: 600px;
+  max-width: 900px;
   margin: 0 auto; 
   padding: 20px;
   min-height: 100vh;
@@ -139,3 +139,4 @@ button:hover { opacity: 0.9; }
   height: 100% !important;
   object-fit: contain; /* keep proportions */
 }
+
