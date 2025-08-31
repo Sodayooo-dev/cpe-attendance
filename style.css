@@ -102,14 +102,22 @@ button:hover { opacity: 0.9; }
 /* QR CARD */
 #qrcode {
   margin: 20px auto;
-  width: 240px;
-  height: 240px;
+  width: min(80vw, 320px);
+  aspect-ratio: 1 / 1;
   background: #F3F4F6;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 12px;
 }
+
+#qrcode canvas,
+#qrcode img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+}
+
 #countdown {
   text-align: center;
   font-weight: 700;
@@ -132,11 +140,3 @@ button:hover { opacity: 0.9; }
     color:#6B7280; font-size:14px;
     text-align: center;
 }
-
-#qrcode canvas,
-#qrcode img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: contain; /* keep proportions */
-}
-
