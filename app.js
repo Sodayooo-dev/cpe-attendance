@@ -35,7 +35,6 @@ function registerStudent() {
     participationNature: document.getElementById("participation").value,
   };
 
-  // Updated validation to include new fields
   if (
     !student.name ||
     !student.id ||
@@ -69,14 +68,12 @@ async function generateQr() {
   const expires = midnight.getTime();
   const nonce = crypto.randomUUID();
 
-  // Updated unsigned string to match Android app format (no signature)
   const unsigned = `${student.id}|${student.name}|${student.section}|${student.email}|${student.gender}|${student.phoneNumber}|${student.designation}|${student.participationNature}|${now}|${expires}|${nonce}`;
   const sig = await hmacSha256(unsigned);
 
-  // Updated payload to match Android app structure
   const payload = {
-    id: student.id,           // Student ID
-    name: student.name,       // Student name
+    id: student.id,           
+    name: student.name,       
     section: student.section,
     email: student.email,
     gender: student.gender,
@@ -121,7 +118,6 @@ async function generateQr() {
   }, 1000);
 }
 
-// Updated validation function to match new format
 async function validateQrPayload(obj) {
   try {
     const unsigned = `${obj.id}|${obj.name}|${obj.section}|${obj.email}|${obj.gender}|${obj.phoneNumber}|${obj.designation}|${obj.participationNature}|${obj.issuedAt}|${obj.expiresAt}|${obj.nonce}`;
@@ -146,3 +142,4 @@ async function validateQrPayload(obj) {
     document.getElementById("qr-card").style.display = "block";
   }
 })();
+
