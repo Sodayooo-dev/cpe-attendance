@@ -2,7 +2,6 @@ const STORAGE_KEY = "studentData";
 const HMAC_KEY = "ang_magfoforge_ipapako_sa_krus"; 
 let timer;
 
-// ---- Utils ----
 function toHex(buffer) {
   return Array.from(new Uint8Array(buffer))
     .map(b => b.toString(16).padStart(2, "0"))
@@ -22,7 +21,6 @@ async function hmacSha256(data, key = HMAC_KEY) {
   return toHex(sigBuffer); 
 }
 
-// ---- Data Structure (matching Android) ----
 class StudentData {
   constructor(name, id, section, email, gender, phoneNumber, designation, participationNature) {
     this.name = name;
@@ -53,9 +51,7 @@ class Payload {
   }
 }
 
-// ---- ID Validation (matching Android format) ----
 function isValidIdFormat(id) {
-  // Check if ID matches xx-xxxxx format (exactly 2 digits, dash, then 5 digits)
   const regex = /^\d{2}-\d{5}$/;
   return regex.test(id);
 }
@@ -65,7 +61,6 @@ function isValidEmail(email) {
   return emailRegex.test(email);
 }
 
-// ---- Registration ----
 function registerStudent() {
   const name = document.getElementById("name").value.trim();
   const id = document.getElementById("studentId").value.trim();
@@ -76,7 +71,6 @@ function registerStudent() {
   const designation = document.getElementById("designation").value;
   const participationNature = document.getElementById("participation").value;
 
-  // Validation (matching Android validation)
   if (!name) {
     alert("Name is required");
     document.getElementById("name").focus();
@@ -133,7 +127,6 @@ function registerStudent() {
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(studentData));
   
-  // Disable fields after registration
   disableFields();
   
   document.getElementById("registration-card").style.display = "none";
@@ -159,7 +152,6 @@ function disableFields() {
   }
 }
 
-// QR code generation
 async function generateQr() {
   const studentDataJson = localStorage.getItem(STORAGE_KEY);
   if (!studentDataJson) {
@@ -169,8 +161,6 @@ async function generateQr() {
 
   const studentData = JSON.parse(studentDataJson);
   const now = Date.now();
-  
-  // Set expiration to midnight of next day
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
   tomorrow.setHours(0, 0, 0, 0);
@@ -178,7 +168,6 @@ async function generateQr() {
   
   const nonce = crypto.randomUUID();
 
-  // Create signature string
   const unsigned = `${studentData.id}|${studentData.name}|${studentData.section}|${studentData.email}|${studentData.gender}|${studentData.phoneNumber}|${studentData.designation}|${studentData.participationNature}|${now}|${expires}|${nonce}`;
   const sig = await hmacSha256(unsigned);
 
@@ -198,8 +187,6 @@ async function generateQr() {
   );
 
   const json = JSON.stringify(payload);
-
-  // Generate QR code
   const qrEl = document.getElementById("qrcode");
   qrEl.innerHTML = "";
   
@@ -213,7 +200,6 @@ async function generateQr() {
   });
   qrEl.style.display = "block";
 
-  // Display student information
   const infoEl = document.getElementById("qr-info");
   if (infoEl) {
     infoEl.innerHTML = `
@@ -227,7 +213,6 @@ async function generateQr() {
     `;
   }
 
-  // Start countdown timer
   if (timer) clearInterval(timer);
   
   const startCountdown = () => {
@@ -253,12 +238,9 @@ async function generateQr() {
   timer = setInterval(startCountdown, 1000);
 }
 
-// QR validation function
 async function validateQrPayload(jsonString) {
   try {
     const payload = JSON.parse(jsonString);
-    
-    // Reconstruct signature string
     const unsigned = `${payload.id}|${payload.name}|${payload.section}|${payload.email}|${payload.gender}|${payload.phoneNumber}|${payload.designation}|${payload.participationNature}|${payload.issuedAt}|${payload.expiresAt}|${payload.nonce}`;
     const expectedSig = await hmacSha256(unsigned);
 
@@ -290,7 +272,6 @@ async function validateQrPayload(jsonString) {
   }
 }
 
-// Auto-format student ID input
 function setupIdFormatting() {
   const idInput = document.getElementById("studentId");
   if (!idInput) return;
@@ -315,17 +296,14 @@ function setupIdFormatting() {
   idInput.setAttribute('maxlength', '8');
 }
 
-// Initialize application
 (function init() {
   setupIdFormatting();
   
-  // Load existing registration if available
   const studentDataJson = localStorage.getItem(STORAGE_KEY);
   if (studentDataJson) {
     try {
       const studentData = JSON.parse(studentDataJson);
       
-      // Populate form fields
       const fieldMappings = {
         "name": studentData.name || '',
         "studentId": studentData.id || '',
@@ -342,7 +320,6 @@ function setupIdFormatting() {
         if (element) element.value = value;
       });
       
-      // Switch to QR view
       disableFields();
       document.getElementById("registration-card").style.display = "none";
       document.getElementById("qr-card").style.display = "block";
